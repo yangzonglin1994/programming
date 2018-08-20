@@ -27,6 +27,8 @@ def combine(front, is_len_even):
 
 
 def bigger(n):
+    if n < 0:
+        n = 0
     n_str = str(n)
     if len(n_str) == 1:
         n += 1 if n != 9 else 2
@@ -48,9 +50,11 @@ def bigger(n):
 
 
 def smaller(n):
+    if n < 0:
+        n = 0
     n_str = str(n)
     if len(n_str) == 1:
-        n -= 1 if n != 0 else 0
+        n -= 1 if n > 0 else 0
         return n
     elif len(n_str) % 2 != 0:
         front, end = get_front_end(n)
