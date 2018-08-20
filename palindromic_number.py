@@ -1,5 +1,5 @@
 """
-Find the number of palindromes closest to a certain number.
+Find the closest palindrome number to a certain number.
 """
 
 
