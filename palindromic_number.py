@@ -1,20 +1,20 @@
 """
 Find the closest palindrome number to a certain number.
+Wrong solution. But don't want to delete it.
+See solution 564 of `programming-java` project.
 """
 
 
-def get_front_end(n):
+def partition(n):
     n_str = str(n)
     if len(n_str) == 1:
         raise ValueError('len of n should be bigger than 1.')
     elif len(n_str) % 2 != 0:
         front = int(n_str[:len(n_str)//2+1])
-        end = int(n_str[:(len(n_str)//2-1):-1])
-        return front, end
     else:
         front = int(n_str[:len(n_str)//2])
-        end = int(n_str[:(len(n_str)//2-1):-1])
-        return front, end
+    end = int(n_str[:(len(n_str)//2-1):-1])
+    return front, end
 
 
 def combine(front, is_len_even):
@@ -33,20 +33,12 @@ def bigger(n):
     if len(n_str) == 1:
         n += 1 if n != 9 else 2
         return n
-    elif len(n_str) % 2 != 0:
-        front, end = get_front_end(n)
-        if front <= end:
-            front += 1
-            return combine(front, False)
-        else:
-            return combine(front, False)
     else:
-        front, end = get_front_end(n)
+        front, end = partition(n)
         if front <= end:
             front += 1
-            return combine(front, True)
-        else:
-            return combine(front, True)
+        is_len_even = True if len(n_str) % 2 == 0 else False
+        return combine(front, is_len_even)
 
 
 def smaller(n):
@@ -56,24 +48,16 @@ def smaller(n):
     if len(n_str) == 1:
         n -= 1 if n > 0 else 0
         return n
-    elif len(n_str) % 2 != 0:
-        front, end = get_front_end(n)
-        if front >= end:
-            front -= 1
-            return combine(front, False)
-        else:
-            return combine(front, False)
     else:
-        front, end = get_front_end(n)
+        front, end = partition(n)
         if front >= end:
             front -= 1
-            return combine(front, True)
-        else:
-            return combine(front, True)
+        is_len_even = True if len(n_str) % 2 == 0 else False
+        return combine(front, is_len_even)
 
 if __name__ == '__main__':
-    n = 99998899999
+    n = 999
     n_bigger = int(bigger(n))
     n_smaller = int(smaller(n))
-    n_closest = n_bigger if n_bigger-n < n-n_smaller else n_smaller
+    n_closest = n_smaller if n-n_smaller < n_bigger-n else n_bigger
     print(n_closest)
